@@ -141,6 +141,8 @@ std::ifstream &operator>>(std::ifstream &file, StringWithConstraints &example)
     if (!isInConstraints(example))
     {
         example.setEntered(removeUnmatched(example.getConstraints(), example.getEntered()));
+        cout << "One of Symbols that you entered is not allowed, so it was deleted!" << endl;
+
     }
     return file;
 }
@@ -158,7 +160,7 @@ std::istream &operator>>(std::istream &is, StringWithConstraints &str)
     if (!isInConstraints(str))
     {
         str.setEntered(removeUnmatched(str.constraints, str.enteredString));
-        cout << "One of Symbols that you entered is not allowed!" << endl;
+        cout << "One of Symbols that you entered is not allowed, so it was deleted!" << endl;
     }
     return is;
 }
@@ -166,37 +168,45 @@ std::istream &operator>>(std::istream &is, StringWithConstraints &str)
 int main()
 {
     string str;
-    ifstream file("data.txt");
-    StringWithConstraints my_str;
-    file >> my_str;
-    cout << my_str.getLength() << endl;
-    cout << my_str;
+    string filename = "data.txt";
+    ifstream file(filename);
+    if (file.fail())
+    {
+        cout << "There is no file named '" << filename << "'";
+    }
+    else
+    {
+        StringWithConstraints my_str;
+        file >> my_str;
+        cout << my_str.getLength() << endl;
+        cout << my_str << endl;
 
-    file >> my_str;
-    cout << my_str.getLength() << endl;
-    cout << my_str;
+        file >> my_str;
+        cout << my_str.getLength() << endl;
+        cout << my_str << endl;
 
-    file >> my_str;
-    cout << my_str.getLength() << endl;
-    cout << my_str;
+        file >> my_str;
+        cout << my_str.getLength() << endl;
+        cout << my_str << endl;
 
-    cout << endl
-         << "Adding 'k' to constraints - " << endl;
-    my_str.addConstraint('k');
-    cout << my_str;
+        cout << endl
+             << "Adding 'k' to constraints - " << endl;
+        my_str.addConstraint('k');
+        cout << my_str << endl;
 
-    cout << endl
-         << "Removing 'h' from constraints - " << endl;
-    my_str.deleteConstraint('h');
-    cout << my_str;
+        cout << endl
+             << "Removing 'h' from constraints - " << endl;
+        my_str.deleteConstraint('h');
+        cout << my_str << endl;
 
-    StringWithConstraints second("abcmhtxso", "some text");
-    cout << second;
+        StringWithConstraints second("abcmhtxso", "some text");
+        cout << second << endl;
 
-    cout << endl
-         << "Adding strings: " << endl;
-    StringWithConstraints third = my_str + second;
-    cout << third;
+        cout << endl
+             << "Adding strings: " << endl;
+        StringWithConstraints third = my_str + second;
+        cout << third << endl;
+    }
 
     // StringWithConstraints my_str;
     // cin >> my_str;
