@@ -142,6 +142,7 @@ std::ifstream &operator>>(std::ifstream &file, StringWithConstraints &example)
     {
         example.setEntered(removeUnmatched(example.getConstraints(), example.getEntered()));
         cout << "One of Symbols that you entered is not allowed, so it was deleted!" << endl;
+
     }
     return file;
 }
